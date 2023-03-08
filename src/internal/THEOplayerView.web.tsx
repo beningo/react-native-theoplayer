@@ -55,26 +55,23 @@ export function THEOplayerView(props: React.PropsWithChildren<THEOplayerViewProp
     };
   }, [container]);
 
-  const chromeless = config?.chromeless === undefined || config?.chromeless === true;
-  return (
-    <>
-      <div
-        ref={container}
-        style={styles.container}
-        className={chromeless ? 'theoplayer-container' : 'theoplayer-container video-js theoplayer-skin'}
-      />
-      {children}
-    </>
-  );
-}
-
-const styles = {
   // by default stretch the video to cover the container.
   // Override using the 'theoplayer-container' class.
-  container: {
-    display: 'flex',
-    position: 'relative',
-    width: '100%',
-    aspectRatio: '16 / 9',
-  } as React.CSSProperties,
-};
+  const containerStyle: React.CSSProperties = {
+    position: 'absolute',
+    left: 0,
+    right: 0,
+    top: 0,
+    bottom: 0,
+    backgroundColor: 'black',
+    overflow: 'hidden',
+  };
+
+  const chromeless = config?.chromeless === undefined || config?.chromeless === true;
+  return (
+    <View style={StyleSheet.absoluteFill}>
+      <div ref={container} style={containerStyle} className={chromeless ? 'theoplayer-container' : 'theoplayer-container video-js theoplayer-skin'} />
+      {children}
+    </View>
+  );
+}
